@@ -1,0 +1,38 @@
+Parameters:
+  InstanceTypeParameter:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - m1.small
+      - m1.large
+    Description: 'Enter t2.micro, m1.small, or m1.large. Default is t2.micro.'
+   
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+   
+  imageid:
+    Description: 'Select appropriate ImageID '
+    Type: String
+    ConstraintDescription: Select appropriate ImageID
+   
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance'
+    Properties:
+      ImageId: !Ref imageid
+      InstanceType: !Ref InstanceTypeParameter
+      KeyName: !Ref KeyName
+      LaunchConfigurationName: launchconfig
+     
+  AWSTemplateFormatVersion: '[2010-09-09]'
+Resources:
+  MyUser:
+    Type: AWS::IAM::User
+    Properties:
+      LoginProfile:
+        Password:
+          Ref: MyPassword
+        
